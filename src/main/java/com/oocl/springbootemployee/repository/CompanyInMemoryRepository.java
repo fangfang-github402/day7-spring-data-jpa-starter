@@ -35,32 +35,32 @@ public class CompanyInMemoryRepository {
 
     public Company findById(Integer id) {
         return this.companies.stream()
-            .filter(company -> company.getId().equals(id))
-            .findFirst()
-            .orElse(null);
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer id) {
         return this.companies.stream()
-            .filter(company -> company.getId().equals(id))
-            .findFirst()
-            .map(Company::getEmployees)
-            .orElse(Collections.emptyList());
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .map(Company::getEmployees)
+                .orElse(Collections.emptyList());
     }
 
     public List<Company> getCompaniesByPagination(Integer pageIndex, Integer pageSize) {
         return this.companies.stream()
-            .skip((long) (pageIndex - 1) * pageSize)
-            .limit(pageSize)
-            .collect(Collectors.toList());
+                .skip((long) (pageIndex - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     public Company updateCompany(Integer companyId, Company company) {
         return this.companies.stream()
-            .filter(storedCompany -> storedCompany.getId().equals(companyId))
-            .findFirst()
-            .map(storedCompany -> updateCompanyAttributes(storedCompany, company))
-            .orElse(null);
+                .filter(storedCompany -> storedCompany.getId().equals(companyId))
+                .findFirst()
+                .map(storedCompany -> updateCompanyAttributes(storedCompany, company))
+                .orElse(null);
     }
 
     private Company updateCompanyAttributes(Company company, Company newCompany) {
@@ -75,9 +75,9 @@ public class CompanyInMemoryRepository {
 
     public Company addCompany(Company company) {
         final Company newCompany = new Company(
-            this.companies.size() + 1,
-            company.getName(),
-            company.getEmployees()
+                this.companies.size() + 1,
+                company.getName(),
+                company.getEmployees()
         );
         companies.add(newCompany);
         return newCompany;

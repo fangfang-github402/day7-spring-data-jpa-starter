@@ -31,7 +31,8 @@ public class Company {
         this.name = name;
     }
 
-    public Company() {}
+    public Company() {
+    }
 
     public Company(String name) {
         this.name = name;

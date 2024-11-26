@@ -12,11 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeInMemoryRepository employeeInMemoryRepository;
-    public EmployeeService(EmployeeRepository employeeRepository,EmployeeInMemoryRepository employeeInMemoryRepository) {
+
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeInMemoryRepository employeeInMemoryRepository) {
         this.employeeRepository = employeeRepository;
         this.employeeInMemoryRepository = employeeInMemoryRepository;
     }
@@ -30,7 +32,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll(Integer page, Integer pageSize) {
-        Pageable pageable = PageRequest.of(page-1, pageSize);
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
         return employeeRepository.findAll(pageable).getContent();
     }
 
@@ -39,18 +41,18 @@ public class EmployeeService {
     }
 
     public Employee create(Employee employee) {
-        if(employee.getAge() < 18 || employee.getAge() > 65)
+        if (employee.getAge() < 18 || employee.getAge() > 65)
             throw new EmployeeAgeNotValidException();
-        if(employee.getAge() >= 30 && employee.getSalary() < 20000.0)
+        if (employee.getAge() >= 30 && employee.getSalary() < 20000.0)
             throw new EmployeeAgeSalaryNotMatchedException();
 
         employee.setActive(true);
         return employeeRepository.save(employee);
     }
 
-    public Employee update(Integer employeeId , Employee employee) {
+    public Employee update(Integer employeeId, Employee employee) {
         Employee employeeExisted = employeeRepository.findById(employeeId).get();
-        if(!employeeExisted.getActive())
+        if (!employeeExisted.getActive())
             throw new EmployeeInactiveException();
 
         return employeeRepository.save(employee);

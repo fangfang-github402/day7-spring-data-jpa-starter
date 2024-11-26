@@ -20,7 +20,7 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    public List<Company> findAll(){
+    public List<Company> findAll() {
         return companyRepository.findAll();
     }
 
@@ -51,7 +51,7 @@ public class CompanyService {
         var nameToUpdate = company.getName() == null ? companyNeedToUpdate.getName() : company.getName();
         var employeesToUpdate = company.getEmployees() == null ? companyNeedToUpdate.getEmployees() : company.getEmployees();
 
-        final var companyToUpdate = new Company(id,nameToUpdate,employeesToUpdate);
+        final var companyToUpdate = new Company(id, nameToUpdate, employeesToUpdate);
         return companyInMemoryRepository.updateCompany(id, companyToUpdate);
     }
 

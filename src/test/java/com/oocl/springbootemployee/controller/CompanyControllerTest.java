@@ -12,7 +12,9 @@ import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.CompanyInMemoryRepository;
 import com.oocl.springbootemployee.repository.CompanyRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
+
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +71,11 @@ class CompanyControllerTest {
         employeeRepository.deleteAll();
         employeeRepository.flush();
 
-        john_smith = new Employee( "John Smith", 32, Gender.MALE, 5000.0);
-        jane_johnson = new Employee( "Jane Johnson", 28, Gender.FEMALE, 6000.0);
-        david_williams = new Employee( "David Williams", 35, Gender.MALE, 5500.0);
-        emily_brown = new Employee( "Emily Brown", 23, Gender.FEMALE, 4500.0);
-        michael_jones = new Employee( "Michael Jones", 40, Gender.MALE, 7000.0);
+        john_smith = new Employee("John Smith", 32, Gender.MALE, 5000.0);
+        jane_johnson = new Employee("Jane Johnson", 28, Gender.FEMALE, 6000.0);
+        david_williams = new Employee("David Williams", 35, Gender.MALE, 5500.0);
+        emily_brown = new Employee("Emily Brown", 23, Gender.FEMALE, 4500.0);
+        michael_jones = new Employee("Michael Jones", 40, Gender.MALE, 7000.0);
         acme_corporation = companyRepository.save(new Company("Acme Corporation", List.of(john_smith, jane_johnson)));
         techcom_solutions = companyRepository.save(new Company("TechCom Solutions", List.of(david_williams, emily_brown, michael_jones)));
         global_innovators = companyRepository.save(new Company("Global Innovators"));
@@ -95,8 +97,8 @@ class CompanyControllerTest {
         final List<Company> fetchedCompanies = companyListJacksonTester.parseObject(result.getResponse().getContentAsString());
         assertThat(fetchedCompanies).hasSameSizeAs(givenCompanies);
         assertThat(fetchedCompanies)
-            .usingRecursiveFieldByFieldElementComparator()
-            .isEqualTo(givenCompanies);
+                .usingRecursiveFieldByFieldElementComparator()
+                .isEqualTo(givenCompanies);
     }
 
     @Test
@@ -117,21 +119,21 @@ class CompanyControllerTest {
     @Test
     void should_return_employees_when_get_employees_under_the_company() throws Exception {
         // Given
-        var givenCompanyId = acme_corporation.getId() ;
+        var givenCompanyId = acme_corporation.getId();
 
         // When
         final var result =
-            client.perform(MockMvcRequestBuilders.get("/companies/" + givenCompanyId + "/employees")).andReturn();
+                client.perform(MockMvcRequestBuilders.get("/companies/" + givenCompanyId + "/employees")).andReturn();
 
         // Then
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(result.getResponse().getContentType()).isEqualTo(MediaType.APPLICATION_JSON.toString());
         final List<Employee> fetchedEmployees =
-            employeeListJacksonTester.parseObject(result.getResponse().getContentAsString());
+                employeeListJacksonTester.parseObject(result.getResponse().getContentAsString());
 
         assertThat(fetchedEmployees).hasSize(2);
         assertThat(fetchedEmployees.stream().map(Employee::getId).toList())
-            .containsAll(List.of(john_smith.getId(),jane_johnson.getId()));
+                .containsAll(List.of(john_smith.getId(), jane_johnson.getId()));
     }
 
     @Test
@@ -143,9 +145,9 @@ class CompanyControllerTest {
         // When
         // Then
         client.perform(MockMvcRequestBuilders.get("/companies/" + companyGiven.getId()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(companyGiven.getId()))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(companyGiven.getName()));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(companyGiven.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(companyGiven.getName()));
     }
 
     @Test
@@ -157,12 +159,12 @@ class CompanyControllerTest {
         // When
         // Then
         client.perform(
-                MockMvcRequestBuilders.post("/companies")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody))
-            .andExpect(MockMvcResultMatchers.status().isCreated())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName));
+                        MockMvcRequestBuilders.post("/companies")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName));
     }
 
     @Test
@@ -175,12 +177,12 @@ class CompanyControllerTest {
         // When
         // Then
         client.perform(MockMvcRequestBuilders.put("/companies/" + idToUpdate)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(idToUpdate))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(nameToUpdate));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(idToUpdate))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(nameToUpdate));
     }
 
     @Test
@@ -190,7 +192,7 @@ class CompanyControllerTest {
 
         // When
         final var result =
-            client.perform(MockMvcRequestBuilders.delete("/companies/" + toDeleteCompanyId)).andReturn();
+                client.perform(MockMvcRequestBuilders.delete("/companies/" + toDeleteCompanyId)).andReturn();
 
         // Then
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());

@@ -32,12 +32,12 @@ public class EmployeeController {
     public List<Employee> getEmployeeList() {
         return employeeService.findAll();
     }
-//
-//    @GetMapping("/{id}")
-//    public Employee getEmployeeById(@PathVariable Integer id) {
-//        return employeeService.findById(id);
-//    }
-//
+
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Integer id) {
+        return employeeService.findById(id);
+    }
+
     @GetMapping(params = {"gender"})
     public List<Employee> getEmployeesByGender(@RequestParam Gender gender) {
         return employeeService.findAll(gender);

@@ -30,9 +30,9 @@ public class EmployeeService {
 //        return employeeRepository.findAllByPage(page, pageSize);
 //    }
 //
-//    public Employee findById(Integer employeeId) {
-//        return employeeRepository.findById(employeeId);
-//    }
+    public Employee findById(Integer employeeId) {
+        return employeeRepository.findAllById(employeeId);
+    }
 //
 //    public Employee create(Employee employee) {
 //        if(employee.getAge() < 18 || employee.getAge() > 65)

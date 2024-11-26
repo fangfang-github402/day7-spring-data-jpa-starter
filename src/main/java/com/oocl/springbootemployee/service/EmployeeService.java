@@ -1,14 +1,14 @@
 package com.oocl.springbootemployee.service;
 
-import com.oocl.springbootemployee.exception.EmployeeAgeNotValidException;
-import com.oocl.springbootemployee.exception.EmployeeAgeSalaryNotMatchedException;
-import com.oocl.springbootemployee.exception.EmployeeInactiveException;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
-import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -25,11 +25,12 @@ public class EmployeeService {
     public List<Employee> findAll(Gender gender) {
         return employeeRepository.findAllByGender(gender);
     }
-//
-//    public List<Employee> findAll(Integer page, Integer pageSize) {
-//        return employeeRepository.findAllByPage(page, pageSize);
-//    }
-//
+
+    public List<Employee> findAll(Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+        return employeeRepository.findAll(pageable).getContent();
+    }
+
     public Employee findById(Integer employeeId) {
         return employeeRepository.findAllById(employeeId);
     }

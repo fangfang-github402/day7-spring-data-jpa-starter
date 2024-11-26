@@ -60,8 +60,8 @@ public class EmployeeController {
 //       employeeService.delete(id);
 //    }
 //
-//    @GetMapping(params = {"pageIndex", "pageSize"})
-//    public List<Employee> getAllByPageSize(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-//        return employeeService.findAll(pageIndex, pageSize);
-//    }
+    @GetMapping(params = {"pageIndex", "pageSize"})
+    public List<Employee> getAllByPageSize(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        return employeeService.findAll(pageIndex, pageSize);
+    }
 }

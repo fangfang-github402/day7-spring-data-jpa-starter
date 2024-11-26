@@ -17,8 +17,11 @@ import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import java.util.List;
+
+import org.hibernate.service.spi.InjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,12 +31,11 @@ class EmployeeServiceTest {
     EmployeeRepository mockedEmployeeRepository;
     @Mock
     EmployeeInMemoryRepository mockedEmployeeInMemoryRrpository;
-    public EmployeeService buildService(){
-        return new EmployeeService(this.mockedEmployeeRepository,this.mockedEmployeeInMemoryRrpository);
-    }
+    @InjectMocks
+    EmployeeService employeeService;
+
     @Test
     void should_return_the_given_employees_when_getAllEmployees() {
-        EmployeeService employeeService = buildService();
         when(mockedEmployeeRepository.findAll()).thenReturn(List.of(new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0)));
 
         //when

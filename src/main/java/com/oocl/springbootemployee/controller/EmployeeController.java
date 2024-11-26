@@ -28,10 +28,10 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-//    @GetMapping
-//    public List<Employee> getEmployeeList() {
-//        return employeeService.findAll();
-//    }
+    @GetMapping
+    public List<Employee> getEmployeeList() {
+        return employeeService.findAll();
+    }
 //
 //    @GetMapping("/{id}")
 //    public Employee getEmployeeById(@PathVariable Integer id) {

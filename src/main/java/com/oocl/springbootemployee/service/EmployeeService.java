@@ -32,7 +32,7 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer employeeId) {
-        return employeeRepository.findAllById(employeeId);
+        return employeeRepository.findById(employeeId).get();
     }
 //
 //    public Employee create(Employee employee) {

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
-    List<Employee> getAllByGender (Gender gender);
+    List<Employee> findAllByGender (Gender gender);
 
     List<Employee> getAllByAge (Integer age);
 }

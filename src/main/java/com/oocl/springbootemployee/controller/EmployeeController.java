@@ -38,10 +38,10 @@ public class EmployeeController {
 //        return employeeService.findById(id);
 //    }
 //
-//    @GetMapping(params = {"gender"})
-//    public List<Employee> getEmployeesByGender(@RequestParam Gender gender) {
-//        return employeeService.findAll(gender);
-//    }
+    @GetMapping(params = {"gender"})
+    public List<Employee> getEmployeesByGender(@RequestParam Gender gender) {
+        return employeeService.findAll(gender);
+    }
 //
 //    @PostMapping
 //    @ResponseStatus(code = HttpStatus.CREATED)

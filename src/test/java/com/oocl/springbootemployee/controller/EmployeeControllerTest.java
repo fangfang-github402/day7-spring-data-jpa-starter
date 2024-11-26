@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -38,6 +39,8 @@ class EmployeeControllerTest {
 
     @Autowired
     private JacksonTester<List<Employee>> employeesJacksonTester;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void setUp() {
@@ -56,6 +59,7 @@ class EmployeeControllerTest {
 
     void initEmployeeRepository() {
         employeeRepository.deleteAll();
+        jdbcTemplate.execute("ALTER TABLE employee ALTER COLUMN id RESTART WITH 1");
         employeeRepository.save(new Employee(null, "John Smith", 32, Gender.MALE, 5000.0));
         employeeRepository.save(new Employee(null, "Jane Johnson", 28, Gender.FEMALE, 6000.0));
         employeeRepository.save(new Employee(null, "David Williams", 35, Gender.MALE, 5500.0));

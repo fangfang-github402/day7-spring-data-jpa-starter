@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -42,6 +43,8 @@ class CompanyControllerTest {
 
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Autowired
     private JacksonTester<List<Company>> companyListJacksonTester;
@@ -60,6 +63,7 @@ class CompanyControllerTest {
 
     @BeforeEach
     void setUp() {
+        jdbcTemplate.execute("ALTER TABLE employee ALTER COLUMN id RESTART WITH 1");
         companyRepository.deleteAll();
         companyRepository.flush();
         employeeRepository.deleteAll();

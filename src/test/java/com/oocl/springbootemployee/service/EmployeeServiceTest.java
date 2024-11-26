@@ -57,18 +57,15 @@ class EmployeeServiceTest {
         //then
         assertEquals("Lucy", createdEmployee.getName());
     }
-//
-//    @Test
-//    void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_17() {
-//        //given
-//        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-//        Employee kitty = new Employee(1, "Kitty", 6, Gender.FEMALE, 8000.0);
-//        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-//        //when
-//        //then
-//        assertThrows(EmployeeAgeNotValidException.class, () -> employeeService.create(kitty));
-//        verify(mockedEmployeeRepository, never()).create(any());
-//    }
+
+    @Test
+    void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_17() {
+        Employee kitty = new Employee(1, "Kitty", 6, Gender.FEMALE, 8000.0);
+        //when
+        //then
+        assertThrows(EmployeeAgeNotValidException.class, () -> employeeService.create(kitty));
+        verify(mockedEmployeeRepository, never()).save(any());
+    }
 //
 //    @Test
 //    void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_66() {

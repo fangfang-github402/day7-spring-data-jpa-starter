@@ -1,14 +1,5 @@
 package com.oocl.springbootemployee.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.oocl.springbootemployee.exception.EmployeeAgeNotValidException;
 import com.oocl.springbootemployee.exception.EmployeeAgeSalaryNotMatchedException;
 import com.oocl.springbootemployee.exception.EmployeeInactiveException;
@@ -16,14 +7,19 @@ import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
-import java.util.List;
-
-import org.hibernate.service.spi.InjectService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -97,17 +93,15 @@ class EmployeeServiceTest {
         verify(mockedEmployeeRepository, never()).save(any());
     }
 
-//    @Test
-//    void should_throw_EmployeeInactiveException_when_update_inactive_employee() {
-//        //given
-//        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-//        Employee inactiveEmployee = new Employee(1, "Bob", 31, Gender.FEMALE, 8000.0);
-//        inactiveEmployee.setActive(false);
-//        when(mockedEmployeeRepository.findById(1)).thenReturn(inactiveEmployee);
-//        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-//        //when
-//        //then
-//        assertThrows(EmployeeInactiveException.class, () -> employeeService.update(1, inactiveEmployee));
-//        verify(mockedEmployeeRepository, never()).create(any());
-//    }
+    @Test
+    void should_throw_EmployeeInactiveException_when_update_inactive_employee() {
+        //given
+        Employee inactiveEmployee = new Employee(1, "Bob", 31, Gender.FEMALE, 8000.0);
+        inactiveEmployee.setActive(false);
+        when(mockedEmployeeRepository.findById(1)).thenReturn(Optional.of(inactiveEmployee));
+        //when
+        //then
+        assertThrows(EmployeeInactiveException.class, () -> employeeService.update(1, inactiveEmployee));
+        verify(mockedEmployeeRepository, never()).save(any());
+    }
 }

@@ -2,6 +2,7 @@ package com.oocl.springbootemployee.service;
 
 import com.oocl.springbootemployee.exception.EmployeeAgeNotValidException;
 import com.oocl.springbootemployee.exception.EmployeeAgeSalaryNotMatchedException;
+import com.oocl.springbootemployee.exception.EmployeeInactiveException;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
@@ -46,16 +47,16 @@ public class EmployeeService {
         employee.setActive(true);
         return employeeRepository.save(employee);
     }
-//
-//    public Employee update(Integer employeeId , Employee employee) {
-//        Employee employeeExisted = employeeRepository.findById(employeeId);
-//        if(!employeeExisted.getActive())
-//            throw new EmployeeInactiveException();
-//
-//        return employeeRepository.update(employeeId, employee);
-//    }
-//
-//    public void delete(Integer employeeId) {
-//        employeeRepository.deleteById(employeeId);
-//    }
+
+    public Employee update(Integer employeeId , Employee employee) {
+        Employee employeeExisted = employeeRepository.findById(employeeId).get();
+        if(!employeeExisted.getActive())
+            throw new EmployeeInactiveException();
+
+        return employeeRepository.save(employee);
+    }
+
+    public void delete(Integer employeeId) {
+        employeeRepository.deleteById(employeeId);
+    }
 }

@@ -5,14 +5,17 @@ import com.oocl.springbootemployee.exception.EmployeeAgeSalaryNotMatchedExceptio
 import com.oocl.springbootemployee.exception.EmployeeInactiveException;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
+import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    private final EmployeeInMemoryRepository employeeInMemoryRepository;
+    public EmployeeService(EmployeeRepository employeeRepository,EmployeeInMemoryRepository employeeInMemoryRepository) {
         this.employeeRepository = employeeRepository;
+        this.employeeInMemoryRepository = employeeInMemoryRepository;
     }
 
     public List<Employee> findAll() {
@@ -20,36 +23,36 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll(Gender gender) {
-        return employeeRepository.findAllByGender(gender);
+        return employeeInMemoryRepository.findAllByGender(gender);
     }
-
-    public List<Employee> findAll(Integer page, Integer pageSize) {
-        return employeeRepository.findAllByPage(page, pageSize);
-    }
-
-    public Employee findById(Integer employeeId) {
-        return employeeRepository.findById(employeeId);
-    }
-
-    public Employee create(Employee employee) {
-        if(employee.getAge() < 18 || employee.getAge() > 65)
-            throw new EmployeeAgeNotValidException();
-        if(employee.getAge() >= 30 && employee.getSalary() < 20000.0)
-            throw new EmployeeAgeSalaryNotMatchedException();
-
-        employee.setActive(true);
-        return employeeRepository.create(employee);
-    }
-
-    public Employee update(Integer employeeId , Employee employee) {
-        Employee employeeExisted = employeeRepository.findById(employeeId);
-        if(!employeeExisted.getActive())
-            throw new EmployeeInactiveException();
-
-        return employeeRepository.update(employeeId, employee);
-    }
-
-    public void delete(Integer employeeId) {
-        employeeRepository.deleteById(employeeId);
-    }
+//
+//    public List<Employee> findAll(Integer page, Integer pageSize) {
+//        return employeeRepository.findAllByPage(page, pageSize);
+//    }
+//
+//    public Employee findById(Integer employeeId) {
+//        return employeeRepository.findById(employeeId);
+//    }
+//
+//    public Employee create(Employee employee) {
+//        if(employee.getAge() < 18 || employee.getAge() > 65)
+//            throw new EmployeeAgeNotValidException();
+//        if(employee.getAge() >= 30 && employee.getSalary() < 20000.0)
+//            throw new EmployeeAgeSalaryNotMatchedException();
+//
+//        employee.setActive(true);
+//        return employeeRepository.create(employee);
+//    }
+//
+//    public Employee update(Integer employeeId , Employee employee) {
+//        Employee employeeExisted = employeeRepository.findById(employeeId);
+//        if(!employeeExisted.getActive())
+//            throw new EmployeeInactiveException();
+//
+//        return employeeRepository.update(employeeId, employee);
+//    }
+//
+//    public void delete(Integer employeeId) {
+//        employeeRepository.deleteById(employeeId);
+//    }
 }

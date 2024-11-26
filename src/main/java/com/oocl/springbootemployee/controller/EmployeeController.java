@@ -42,12 +42,12 @@ public class EmployeeController {
     public List<Employee> getEmployeesByGender(@RequestParam Gender gender) {
         return employeeService.findAll(gender);
     }
-//
-//    @PostMapping
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    public Employee addEmployee(@RequestBody Employee employee) {
-//        return employeeService.create(employee);
-//    }
+
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Employee addEmployee(@RequestBody Employee employee) {
+        return employeeService.create(employee);
+    }
 //
 //    @PutMapping("/{id}")
 //    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {

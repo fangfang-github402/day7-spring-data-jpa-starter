@@ -46,20 +46,17 @@ class EmployeeServiceTest {
         assertEquals("Lucy", allEmployees.get(0).getName());
     }
 
-//    @Test
-//    void should_return_the_created_employee_when_create_given_a_employee() {
-//        //given
-//        EmployeeRepository mockedEmployeeRepository = mock(EmployeeRepository.class);
-//        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
-//        when(mockedEmployeeRepository.create(any())).thenReturn(lucy);
-//        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-//
-//        //when
-//        Employee createdEmployee = employeeService.create(lucy);
-//
-//        //then
-//        assertEquals("Lucy", createdEmployee.getName());
-//    }
+    @Test
+    void should_return_the_created_employee_when_create_given_a_employee() {
+        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
+        when(mockedEmployeeRepository.save(any())).thenReturn(lucy);
+
+        //when
+        Employee createdEmployee = employeeService.create(lucy);
+
+        //then
+        assertEquals("Lucy", createdEmployee.getName());
+    }
 //
 //    @Test
 //    void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_17() {

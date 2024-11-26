@@ -1,5 +1,7 @@
 package com.oocl.springbootemployee.service;
 
+import com.oocl.springbootemployee.exception.EmployeeAgeNotValidException;
+import com.oocl.springbootemployee.exception.EmployeeAgeSalaryNotMatchedException;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
@@ -34,16 +36,16 @@ public class EmployeeService {
     public Employee findById(Integer employeeId) {
         return employeeRepository.findById(employeeId).get();
     }
-//
-//    public Employee create(Employee employee) {
-//        if(employee.getAge() < 18 || employee.getAge() > 65)
-//            throw new EmployeeAgeNotValidException();
-//        if(employee.getAge() >= 30 && employee.getSalary() < 20000.0)
-//            throw new EmployeeAgeSalaryNotMatchedException();
-//
-//        employee.setActive(true);
-//        return employeeRepository.create(employee);
-//    }
+
+    public Employee create(Employee employee) {
+        if(employee.getAge() < 18 || employee.getAge() > 65)
+            throw new EmployeeAgeNotValidException();
+        if(employee.getAge() >= 30 && employee.getSalary() < 20000.0)
+            throw new EmployeeAgeSalaryNotMatchedException();
+
+        employee.setActive(true);
+        return employeeRepository.save(employee);
+    }
 //
 //    public Employee update(Integer employeeId , Employee employee) {
 //        Employee employeeExisted = employeeRepository.findById(employeeId);
